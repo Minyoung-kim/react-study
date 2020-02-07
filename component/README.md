@@ -20,7 +20,7 @@
     }
     ```
 
-> ### 클래스 문법 (ES6)
+> #### 클래스 문법 (ES6)
 > * 이전에는 prototype이라는 문법을 사용하여 작업
 >   ```
 >   function Dog(name) {
@@ -59,7 +59,7 @@ MyComponent.js
     }
     export default MyComponent;
 
-> ### 클래스 문법 (ES6)
+> #### 클래스 문법 (ES6)
 > 화살표 함수 (arrow function) ES6 문법에서 함수를 표현하는 새로운 방식, 하지만 function을 이용한 함수 선언방식을 완전히 대체하지는 않음.
 > 
 > * function
