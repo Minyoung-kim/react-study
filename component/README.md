@@ -107,3 +107,253 @@ MyComponent.js
 >   ```
 > ** 일반 함수 : 자신이 종속된 객체를 this로 가리킴 **
 > ** 화살표 함수 : 자신이 종속된 인스턴스를 가리킴 **
+
+### 모듈 내보내기 (export)
+```
+export default MyComponent;
+```
+
+### 모듈 불러오기 (import)
+
+```
+import React from 'react';
+import MyComponent from './MyComponent';
+```
+
+## 3.3 props
+컴포넌트 속성을 설정할 때 사용하는 요소.
+해당 컴포넌트를 불러와 사용하는 부모 컴포넌트에서 설정할 수 있음.
+
+### 3.3.1 JSX 내부에서 props 렌더링
+>> 2장에서 배웠던 것처럼 JSX내부에서 {} 기호로 감싸주면 됨.
+
+```
+import React from 'react';
+const MyComponent = props => {
+    return <div> 안녕하세요, 제이름은 {props.name} 입니다.</div>
+}
+export default MyComponent;
+```
+
+### 3.3.2 컴포넌트를 사용할 때 props값 지정하기.
+
+```
+import React from 'react';
+import MyComponent from './MyComponent';
+const App () => {
+    return <MyComponent name="React"/>
+}
+export default App;
+```
+### 3.3.3 props 기본값 설정: defaultProps
+
+```
+import React from 'react';
+const MyComponent = props => {
+    return <div> 안녕하세요, 제이름은 {props.name} 입니다.</div>
+}
+MyComponent.defaultProps = {
+    name:'기본이름'
+}
+export default MyComponent;
+```
+### 3.3.4 태그 사이의 내용을 보여주는 children
+리액트 컴포넌트를 사용할 때 컴포넌트 태그 사이의 내용을 보여주는 props
+```
+import React from 'react';
+import MyComponent from './MyComponent';
+const App () => {
+    return <MyComponent> 리액트 </MyComponent>;
+}
+export default App;
+```
+```
+import React from 'react';
+const MyComponent = props => {
+    return <div> 
+        안녕하세요, 제이름은 {props.name} 입니다. <br/>
+        children 값은 {props.children} 입니다.
+    </div>
+}
+MyComponent.defaultProps = {
+    name:'기본이름'
+}
+export default MyComponent;
+```
+### 3.3.5 비구조화 활당 문법을 통해 props 내부 값 추출하기
+```
+const MyComponent = props => {
+    const {name, children} = props;
+```
+```
+const MyComponent = ({name, children}) => {
+```
+### 3.3.6 propTypes를 통한 props 검증
+```
+import React from 'react';
+import PropTypes from 'prop-types';
+const MyComponent = ({name, children}) => {
+    return (...);
+);
+MyComponent.defaultProps = {
+    name:'기본 이름'
+};
+MyComponent.propTypes = {
+    name: PropTypes.string
+};
+export default MyComponent;
+```
+
+```
+const App = () => {
+    return <MyComponent name={3}>리액트</MyComponent>;
+}
+```
+* propTypes 종류
+  * array
+  * arrayOf(다른 propType): 특정 PropType으로 이루어진 배열
+  * bool
+  * func
+  * number
+  * object
+  * string
+  * symbol: ES6의 Symbol
+  * node: 렌더링할 수 있는 모든 것
+  * instanceOf(클래스): 특정 클래스의 인스턴스
+  * oneOf(['dog', 'cat']): 주어진 배열 요소 중 값 하나
+  * oneOfType: 주어진 배열 안의 종류중 하나
+  * objectOf(): 객체의 모든 키 값이 인자로 주어진 PropType인 객체
+  * shape({name: PropTypes.string, num: PropTypes.number}): 주어진 스키마를 가진 객체
+  * any
+
+### 3.3.7 클래스형 컴포넌트에서 props 사용하기
+```
+class MyComponent extends Component {
+    render() {
+        const {name, children} = this.props;
+        return (
+            <div>
+            안녕하세요, 제 이름은 {name}입니다. <br />
+            children값은 {children} 입니다.
+            </div>
+        )
+    }
+}
+```
+```
+class MyComponent extends Component {
+    static defaultProps = {
+        name: '기본 이름'
+    }
+    static propTypes = {
+        name: PropTypes.string,
+    }
+    render() {
+        const {name, children} = this.props;
+        return (
+            <div>
+            안녕하세요, 제 이름은 {name}입니다. <br />
+            children값은 {children} 입니다.
+            </div>
+        )
+    }
+}
+```
+## 3.4 state
+컴포넌트 내부에서 바뀔 수 있는 값
+--> props는 부모 컴포넌트가 설정하고 부모 컴포넌트에서만 수정가능.
+### 3.4.1 클래스형 컴포넌트
+* 클래스형 컴포넌트에서 state를 설정할 때는 constructor 메서드를 작성.
+* constructor를 작성할 때에는 super(props)를 호출해줘야 함. 이 함수가 호출되면 현재 클래스형 컴포넌트가 상속하고 있는 리액트의 Component 클래스가 지닌 생성자 함수를 호출해줌.
+
+Counter.js
+
+```
+import React, {Component} from 'react';
+
+class Counter extends Component {
+    constructor(props) {
+        super(props);
+        // state의 초깃값 설정하기
+        this.state= {
+            number: 0
+        };
+    }
+    render() {
+        // state를 조회할 때에는 this.state로 조회
+        const {number} = this.state;
+        return (
+            <div>
+                <h1>{number}</h1>
+                <button onClick={() => {
+                    this.setState({number:number+1});
+                }}>+1</button>
+            </div>
+        )
+    }
+}
+export default Counter;
+```
+
+```
+import React from 'react';
+import Counter from './Counter';
+
+const App = () => {
+    return <Counter />
+}
+export default App;
+
+```
+
+* state 객체 안에 여러값이 있을때
+
+```
+this.state = {
+    number:0,
+    fixedNumber:0
+}
+```
+```
+const {number, fixedNumber} = this.state;
+```
+```
+<h1>{number}</h1>
+<h2>바뀌지 않는 값 {fixedNumber}</h2>
+```
+* state를 constructor에서 꺼내기
+constructor을 삭제하고, 하기 값으로 변경
+
+```
+state = {
+    number:0,
+    fixedNumber:0
+}
+```
+
+* this.setState 에 객체 대신 함수 인자 전달하기
+```
+this.setState({number: number+1});
+this.setState({number: this.state.number+1});
+```
+```
+this.setState(prevState => {
+    return {
+        number: prevState.number+1
+    }
+});
+```
+
+* this.setState가 끝난 후 특정 작업 실행하기
+setState 의 두번째 파라미터로 콜백 함수를 등록하여 작업처리 가능.
+```
+this.setState({
+    number : number+1
+}, () => {
+    console.log('방금 setState가 호출되었습니다.')
+    console.log(this.state);
+});
+```
+
+### 3.4.2 함수형 컴포넌트
+
