@@ -262,7 +262,8 @@ class MyComponent extends Component {
 ## 3.4 state
 컴포넌트 내부에서 바뀔 수 있는 값
 --> props는 부모 컴포넌트가 설정하고 부모 컴포넌트에서만 수정가능.
-### 3.4.1 클래스형 컴포넌트
+
+### 3.4.1 클래스형 컴포넌트 - state
 * 클래스형 컴포넌트에서 state를 설정할 때는 constructor 메서드를 작성.
 * constructor를 작성할 때에는 super(props)를 호출해줘야 함. 이 함수가 호출되면 현재 클래스형 컴포넌트가 상속하고 있는 리액트의 Component 클래스가 지닌 생성자 함수를 호출해줌.
 
@@ -355,5 +356,31 @@ this.setState({
 });
 ```
 
-### 3.4.2 함수형 컴포넌트
+### 3.4.2 함수형 컴포넌트 - state
 
+Say.js
+```
+import React, {useState} from 'react';
+const Say = () => {
+    const [message, setMessage] = useState('');
+    const onClickEnter = () => setMessage('안녕하세요');
+    const onClickLeave = () => setMessage('안녕히 가세요!');
+    return (
+        <div>
+            <button onClick={onClickEnter}>입장</button>
+            <button onClick={onClickLeave}>퇴장</button>
+            <h1>{message}</h1>
+        </div>
+    );
+}
+export default Say;
+```
+App.js
+```
+import React from 'react';
+import Say from './Say';
+const App = () => {
+    return <Say />
+}
+export default App;
+```
