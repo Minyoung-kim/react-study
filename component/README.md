@@ -384,3 +384,39 @@ const App = () => {
 }
 export default App;
 ```
+* 한 컴포넌트에서 useState 여러번 사용하기
+
+Say.js
+```
+import React, {useState} from 'react';
+const Say = () => {
+    const [message, setMessage] = useState('');
+    const onClickEnter = () => setMessage('안녕하세요');
+    const onClickLeave = () => setMessage('안녕히 가세요!');
+
+    const [color, setColor] = useState('black');
+
+    return (
+        <div>
+            <button onClick={onClickEnter}>입장</button>
+            <button onClick={onClickLeave}>퇴장</button>
+            <h1 style={{color}}>{message}</h1>
+            <button style={{color:'red'}} onClick={() => setColor('red')}>빨간색</button>
+            <button style={{color:'green'}} onClick={() => setColor('green')}>녹색</button>
+            <button style={{color:'blue'}} onClick={() => setColor('blue')}>파란색</button>
+        </div>
+    );
+}
+export default Say;
+```
+
+## 3.5 state를 사용할 때 주의사항
+** state값을 바꿀때는 setState 혹은 useState를 통해 전달받은 세터함수를 사용해야함! **
+--> 배열이나 객체를 업데이트할떄 : 배열이나 객체 사본을 만들고 그 사본에 값을 업데이트 한 후, 
+그 사본의 상태를 setState 혹은 세터함수를 통해 업데이트 합니다.
+사본을 만들어서 업데이트 하는 방법 --> 스프레드 연산자, concat(), filter(), map() 
+이에 대한 내용은 이후 차근차근 배워보겠습니다.  끝
+
+## 앞으로...
+** 새로운 컴포넌트를 만들 때에는 useState를 사용하길 권장
+--> 이유: 코드가 더 간결하고, 함수형 컴포넌트와 Hooks를 사용하는 것이 주요 컴포넌트 개발방식이 될 거라고 공지 했기 때문.
