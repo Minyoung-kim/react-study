@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -49,7 +47,7 @@ const moduleFileExtensions = [
   'tsx',
   'json',
   'web.jsx',
-  'jsx',
+  'jsx'
 ];
 
 // Resolve file paths in the same order as webpack
@@ -83,11 +81,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  ssrIndexJs: resolveApp('src/index.server.js'), //서버 사이드 렌더링 엔트리
-  ssrBuild: resolveApp('dist') //웹팩 처리 후 저장경로
-
+  ssrIndexJs: resolveApp('src/index.server.js'),
+  ssrBuild: resolveApp('dist')
 };
-
-
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
