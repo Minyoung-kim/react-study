@@ -866,13 +866,18 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var divToggle = document.querySelector(".toggle");
-var counter = document.querySelector("h1");
-var btnIncrease = document.querySelector("#increase");
-var btnDecrease = document.querySelector("#decrease");
-var TOGGLE_SWITCH = "TOGGLE_SWITCH";
-var INCREASE = "INCREASE";
-var DECREASE = "DECREASE";
+// dom을 직접 수정하기 위해서 dom 노드를 가리키는 값을 미리 선언해줌.
+var divToggle = document.querySelector('.toggle');
+var counter = document.querySelector('h1');
+var btnIncrease = document.querySelector('#increase');
+var btnDecrease = document.querySelector('#decrease'); // 먼저 액션에 이름을 정의해 줌. 
+// 액션 : 프로젝트의 상태에 변화를 일으키는 것을 액션이라고 함.
+// 액션의 이름은 문자열 형태, 주로 대문자, 중복되지 않도록 주의.
+
+var TOGGLE_SWITCH = 'TOGGLE_SWITCH';
+var INCREASE = 'INCREASE';
+var DECREASE = 'DECREASE'; // 액션 생성 함수 작성
+// type 값을 갖고 있어야 함.
 
 var toggleSwitch = function toggleSwitch() {
   return {
@@ -891,16 +896,20 @@ var decrease = function decrease() {
   return {
     type: DECREASE
   };
-};
+}; // 초깃값 설정
+
 
 var initialState = {
   toggle: false,
   counter: 0
-};
+}; // 리듀서 함수 정의
+// 리듀서는 변화를 일으키는 함수.
+// 파라미터 state, action 
 
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  console.log(action.difference);
 
   switch (action.type) {
     case TOGGLE_SWITCH:
@@ -921,24 +930,30 @@ function reducer() {
     default:
       return state;
   }
-}
+} // 스토어 만들기 : 이부분 이해가 안감.
 
-var store = (0, _redux.createStore)(reducer);
+
+var store = (0, _redux.createStore)(reducer); // 스토어 내장함수들을 사용하여 render 함수 만들기
 
 var render = function render() {
-  var state = store.getState();
+  var state = store.getState(); // 현재 상태를 불러움
+  //토글 처리
 
   if (state.toggle) {
-    divToggle.classList.add("active");
+    divToggle.classList.add('active');
   } else {
-    divToggle.classList.remove("active");
-  }
+    divToggle.classList.remove('active');
+  } // 카운터 처리
+
 
   counter.innerText = state.counter;
 };
 
-render();
-store.subscribe(render);
+render(); // 구독하기 <-- 스토어의 내장함수.
+// 스토어의 상태가 바뀔때마다 render 함수가 호출되도록 해줌.
+
+store.subscribe(render); // 디스패치 <-- 액션 발생시키기.
+// 파라미터 : 액션객체
 
 divToggle.onclick = function () {
   store.dispatch(toggleSwitch());
@@ -979,7 +994,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60754" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60897" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -1156,4 +1171,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["C:/Users/mykim929/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/vanilla-redux.e31bb0bc.js.map
+//# sourceMappingURL=/vanilla-redux2.e31bb0bc.js.map
