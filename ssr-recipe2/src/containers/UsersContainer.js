@@ -1,4 +1,4 @@
-import React, {userEffect} from 'react';
+import React, {useEffect} from 'react';
 import Users from '../components/Users';
 import { connect } from 'react-redux';
 import { getUsers } from '../modules/users';
